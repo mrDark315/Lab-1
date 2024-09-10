@@ -18,7 +18,41 @@ html {
 }
 
     .container h2 {
-        color: #fff;
+        color: #ffffffc9;
         text-align: center;
-        margin-bottom: 30px;
+        /* margin-bottom: 30px; */
+    }
+
+    .input_field input {
+        width: 290px;
+        height: 35px;
+        border: none;
+        background: #444;
+        color: #d3d3d3;
+        padding-left: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        margin-top: 10px;
+        margin-bottom: 5px;
+    }
+
+    .input_field ::placeholder {
+        color: #c0c0c0;
+        font-size: 16px;
+    }
+
+    .error {
+        color: #fd4648;
+    }
+
+    .continue-button {
+        background-color: #ff4646;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 10px;
     }

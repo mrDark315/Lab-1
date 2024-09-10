@@ -25,25 +25,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Проверка имени
     if (!preg_match("/^[a-zA-Z]+$/", $first_name)) {
-        $first_name_error = "First name should only contain letters.";
+        $first_name_error = "First name should only contain letters";
         $is_valid = false;
     }
 
     // Проверка фамилии
     if (!preg_match("/^[a-zA-Z]+$/", $last_name)) {
-        $last_name_error = "Last name should only contain letters.";
+        $last_name_error = "Last name should only contain letters";
         $is_valid = false;
     }
 
     // Проверка email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $email_error = "Invalid email format.";
+        $email_error = "Invalid email format";
         $is_valid = false;
     }
 
     // Проверка пароля
     if (strlen($password) < 6) {
-        $password_error = "Password should be at least 6 characters long.";
+        $password_error = "Password should be at least 6 characters";
         $is_valid = false;
     }
 }
