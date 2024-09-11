@@ -43,6 +43,17 @@ html {
 
     .error {
         color: #fd4648;
+        font-size: 0.9em;
+        display: none;
+    }
+
+    .error.visible {
+        display: block;
+    }
+
+    .success {
+        color: green;
+        font-size: 1em;
     }
 
     .continue-button {

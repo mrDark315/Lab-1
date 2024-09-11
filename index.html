@@ -5,27 +5,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab_1</title>
     <link rel="stylesheet" href="main.css">
+    <style>
+        .error {
+            color: red;
+            font-size: 0.9em;
+            display: none; /* Скрываем по умолчанию */
+        }
+
+        .error.visible {
+            display: block; /* Показываем ошибку, если добавлен класс visible */
+        }
+
+        .success {
+            color: green;
+            font-size: 1em;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
     <h2>Sign up</h2>
     <div class="form-grid">
-        <form action="main.php" method="POST">
+        <form id="signupForm" method="POST">
             <div class="input_field">
-                <input type="text" name="first_name" placeholder="First Name">
+                <input type="text" id="first_name" name="first_name" placeholder="First Name" value="">
+                <p class="error" id="firstNameError">First name is required</p>
             </div>
             <div class="input_field">
-                <input type="text" name="last_name" placeholder="Last Name">
+                <input type="text" id="last_name" name="last_name" placeholder="Last Name" value="">
+                <p class="error" id="lastNameError">Last name is required</p>
             </div>
             <div class="input_field">
-                <input type="email" name="email" placeholder="Email">
+                <input type="email" id="email" name="email" placeholder="Email" value="">
+                <p class="error" id="emailError">Invalid email format</p>
             </div>
             <div class="input_field">
-                <input type="password" name="password" placeholder="Password">
+                <input type="password" id="password" name="password" placeholder="Password" value="">
+                <p class="error" id="passwordError">Password must be at least 6 characters</p>
             </div>
             <button type="submit" class="continue-button">Continue</button>
         </form>
+        <p class="success" id="successMessage"></p>
     </div>
 </div>
+
+<script>
+document.getElementById('signupForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Предотвращаем перезагрузку страницы
+
+    // Собираем данные формы
+    const formData = new FormData(this);
+
+    // Отправляем данные через fetch
+    fetch('main.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Сброс сообщений об ошибках и успехе
+        document.querySelectorAll('.error').forEach(e => e.classList.remove('visible'));
+        document.getElementById('successMessage').textContent = '';
+
+        // Если есть ошибки, показываем их
+        if (data.errors) {
+            if (data.errors.first_name) {
+                document.getElementById('firstNameError').textContent = data.errors.first_name;
+                document.getElementById('firstNameError').classList.add('visible');
+            }
+            if (data.errors.last_name) {
+                document.getElementById('lastNameError').textContent = data.errors.last_name;
+                document.getElementById('lastNameError').classList.add('visible');
+            }
+            if (data.errors.email) {
+                document.getElementById('emailError').textContent = data.errors.email;
+                document.getElementById('emailError').classList.add('visible');
+            }
+            if (data.errors.password) {
+                document.getElementById('passwordError').textContent = data.errors.password;
+                document.getElementById('passwordError').classList.add('visible');
+            }
+        } else if (data.success) {
+            // Если регистрация успешна
+            document.getElementById('successMessage').textContent = data.success;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
+</script>
+
 </body>
 </html>
